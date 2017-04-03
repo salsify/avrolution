@@ -55,7 +55,7 @@ module Avrolution
         # compatible is nil if the subject is not registered
         logger.info("... New schema: #{fullname}")
       elsif !compatible && !compatibility_fallback(schema, fullname, fingerprint)
-        incompatible_schemas << file unless compatible
+        incompatible_schemas << file
         report_incompatibility(schema, fullname, fingerprint)
       end
     end
@@ -124,7 +124,7 @@ module Avrolution
       end
 
       netrc = Netrc.read
-      netrc['api.heroku.com'][1]
+      netrc.dig('api.heroku.com', 1)
     end
   end
 end
