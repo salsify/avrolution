@@ -1,19 +1,17 @@
 describe Avrolution::CompatibilityBreaksFile, :fakefs do
-  include_context "Rails context"
-
   let(:logger) { instance_double(Logger, info: nil) }
 
   before do
     FileUtils.mkdir_p(File.dirname(described_class.path))
   end
 
-  describe "self.path" do
+  describe ".path" do
     it "returns the path to the compatibility breaks file" do
-      expect(described_class.path).to eq('/rails_root/avro/schema/compatibility_breaks.txt')
+      expect(described_class.path).to eq(Avrolution.compatibility_breaks_file)
     end
   end
 
-  describe "self.add" do
+  describe ".add" do
     let(:name) { 'com.salsify.foo' }
     let(:fingerprint) { 'ABC123' }
     let(:with_compatibility) { 'FORWARD' }
@@ -86,7 +84,7 @@ com.salsify.foo ABC123 BACKWARD
     end
   end
 
-  describe "self.load" do
+  describe ".load" do
     subject(:compatibility_breaks) { described_class.load }
 
     context "when the file does not exist" do

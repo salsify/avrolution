@@ -1,9 +1,6 @@
 describe Avrolution::CompatibilityCheck, :fakefs do
-  include_context "Rails context"
-
   let(:schema_registry) { instance_double(AvroTurf::ConfluentSchemaRegistry) }
-  let(:app_schema_path) { File.join(Rails.root, 'avro/schema') }
-  let(:gem_schema_path) { File.join(Rails.root, 'schemas_gem/avro/schema') }
+  let(:app_schema_path) { File.join(Avrolution.root, 'avro/schema') }
   let(:logger) { instance_double(Logger, info: nil) }
 
   before do
@@ -38,20 +35,6 @@ describe Avrolution::CompatibilityCheck, :fakefs do
         expect(check.call).to be_success
         expect(schema_registry).to have_received(:compatible?)
                                      .with('com.salsify.app', Avro::Schema, 'latest')
-      end
-
-      context "when there is a schemas_gem directory" do
-        before do
-          FileUtils.mkdir_p(gem_schema_path)
-          File.write(File.join(gem_schema_path, 'gem.avsc'), <<-JSON)
-{ "type": "record", "name": "com.salsify.gem" }
-          JSON
-        end
-
-        it "returns success" do
-          expect(check.call).to be_success
-          expect(schema_registry).to have_received(:compatible?).twice
-        end
       end
     end
 

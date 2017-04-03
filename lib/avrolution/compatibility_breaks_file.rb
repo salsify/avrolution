@@ -1,7 +1,6 @@
 module Avrolution
   module CompatibilityBreaksFile
 
-    COMPATIBILITY_BREAKS_RELATIVE_PATH = 'avro/schema/compatibility_breaks.txt'.freeze
     NONE = 'NONE'.freeze
 
     class DuplicateEntryError < StandardError
@@ -11,7 +10,7 @@ module Avrolution
     end
 
     def self.path
-      File.join(Rails.root, COMPATIBILITY_BREAKS_RELATIVE_PATH)
+      Avrolution.compatibility_breaks_file
     end
 
     def self.add(name:,

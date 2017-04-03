@@ -19,5 +19,10 @@ Avrolution::CompatibilityBreak
 # rubocop:enable Style/RescueModifier
 
 RSpec.configure do |config|
+  config.before do
+    Avrolution.root = '/schema_root'
+    Avrolution.compatibility_schema_registry_url = 'https://registry.example.com'
+  end
+
   config.include FakeFS::SpecHelpers, fakefs: true
 end

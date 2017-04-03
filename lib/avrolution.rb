@@ -11,6 +11,7 @@ module Avrolution
 end
 
 require 'active_support/core_ext/object/try'
+require 'avrolution/configuration'
 require 'avrolution/compatibility_break'
 require 'avrolution/compatibility_breaks_file'
 require 'avrolution/compatibility_check'
