@@ -1,4 +1,4 @@
-describe SalsifyAvro::Compatibility::CompatibilityBreaksFile, :fakefs do
+describe Avrolution::CompatibilityBreaksFile, :fakefs do
   include_context "Rails context"
 
   let(:logger) { instance_double(Logger, info: nil) }
@@ -23,25 +23,25 @@ describe SalsifyAvro::Compatibility::CompatibilityBreaksFile, :fakefs do
       it "raises an error when name is blank" do
         expect do
           described_class.add(name: '', fingerprint: fingerprint)
-        end.to raise_error(SalsifyAvro::Compatibility::CompatibilityBreak::ValidationError, "Name can't be blank")
+        end.to raise_error(Avrolution::CompatibilityBreak::ValidationError, "Name can't be blank")
       end
 
       it "raises an error when fingerprint is blank" do
         expect do
           described_class.add(name: name, fingerprint: '')
-        end.to raise_error(SalsifyAvro::Compatibility::CompatibilityBreak::ValidationError, "Fingerprint can't be blank")
+        end.to raise_error(Avrolution::CompatibilityBreak::ValidationError, "Fingerprint can't be blank")
       end
 
       it "raises an error when with compatibility is invalid" do
         expect do
           described_class.add(name: name, fingerprint: fingerprint, with_compatibility: 'FOO')
-        end.to raise_error(SalsifyAvro::Compatibility::CompatibilityBreak::ValidationError, 'With compatibility is not included in the list')
+        end.to raise_error(Avrolution::CompatibilityBreak::ValidationError, 'With compatibility is not included in the list')
       end
 
       it "raises an error when after compatibility is invalid" do
         expect do
           described_class.add(name: name, fingerprint: fingerprint, after_compatibility: 'FOO')
-        end.to raise_error(SalsifyAvro::Compatibility::CompatibilityBreak::ValidationError, 'After compatibility is not included in the list')
+        end.to raise_error(Avrolution::CompatibilityBreak::ValidationError, 'After compatibility is not included in the list')
       end
     end
 
@@ -123,7 +123,7 @@ ONE TWO THREE FOUR
         it "raises an error" do
           expect do
             compatibility_breaks
-          end.to raise_error(SalsifyAvro::Compatibility::CompatibilityBreak::ValidationError)
+          end.to raise_error(Avrolution::CompatibilityBreak::ValidationError)
         end
       end
 

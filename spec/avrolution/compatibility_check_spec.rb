@@ -1,4 +1,4 @@
-describe SalsifyAvro::Compatibility::Check, :fakefs do
+describe Avrolution::CompatibilityCheck, :fakefs do
   include_context "Rails context"
 
   let(:schema_registry) { instance_double(AvroTurf::ConfluentSchemaRegistry) }
@@ -37,7 +37,7 @@ describe SalsifyAvro::Compatibility::Check, :fakefs do
       it "returns success" do
         expect(check.call).to be_success
         expect(schema_registry).to have_received(:compatible?)
-                                     .with('com.salsify.app', SalsifyAvro::Schema, 'latest')
+                                     .with('com.salsify.app', Avro::Schema, 'latest')
       end
 
       context "when there is a schemas_gem directory" do
@@ -87,11 +87,11 @@ describe SalsifyAvro::Compatibility::Check, :fakefs do
     end
 
     context "when there is an incompatible schema with a compatibility break defined" do
-      let(:compatibility_breaks_file) { SalsifyAvro::Compatibility::CompatibilityBreaksFile.path }
+      let(:compatibility_breaks_file) { Avrolution::CompatibilityBreaksFile.path }
       let(:with_compatibility) { 'NONE' }
 
       before do
-        allow(schema_registry).to receive(:compatible?).with('com.salsify.app', SalsifyAvro::Schema, 'latest').and_return(false)
+        allow(schema_registry).to receive(:compatible?).with('com.salsify.app', Avro::Schema, 'latest').and_return(false)
         FileUtils.mkdir_p(File.dirname(compatibility_breaks_file))
         File.write(compatibility_breaks_file, "com.salsify.app #{fingerprint} #{with_compatibility}\n")
       end
@@ -99,7 +99,7 @@ describe SalsifyAvro::Compatibility::Check, :fakefs do
       context "when the schema is compatible using the defined compatibility break" do
         before do
           allow(schema_registry).to receive(:compatible?)
-                                      .with('com.salsify.app', SalsifyAvro::Schema, 'latest', with_compatibility: with_compatibility).and_return(true)
+                                      .with('com.salsify.app', Avro::Schema, 'latest', with_compatibility: with_compatibility).and_return(true)
         end
 
         it "returns success" do
@@ -112,7 +112,7 @@ describe SalsifyAvro::Compatibility::Check, :fakefs do
 
         before do
           allow(schema_registry).to receive(:compatible?)
-                                      .with('com.salsify.app', SalsifyAvro::Schema, 'latest', with_compatibility: with_compatibility).and_return(false)
+                                      .with('com.salsify.app', Avro::Schema, 'latest', with_compatibility: with_compatibility).and_return(false)
         end
 
         it_behaves_like "an incompatible schema"

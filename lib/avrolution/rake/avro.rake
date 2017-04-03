@@ -1,5 +1,6 @@
-namespace :avro do
+require 'active_support/core_ext/object/blank'
 
+namespace :avro do
   desc 'Add an Avro schema compatibility break. Parameters: name, fingerprint, with_compatibility, after_compatibility'
   task add_compatibility_break: [:environment] do
     compatibility_break_args = ENV.to_h.slice('name', 'fingerprint', 'with_compatibility', 'after_compatibility').symbolize_keys
@@ -14,13 +15,12 @@ namespace :avro do
       exit(1)
     end
 
-    SalsifyAvro::Compatibility::CompatibilityBreaksFile
-      .add(**compatibility_break_args)
+    Avrolution::CompatibilityBreaksFile.add(**compatibility_break_args)
   end
 
   desc 'Check that all Avro schemas are compatible with latest registered in production'
   task check_compatibility: [:environment] do
-    check = SalsifyAvro::Compatibility::Check.new.call
+    check = Avrolution::CompatibilityCheck.new.call
     if check.success?
       puts 'All schemas are compatible'
     else

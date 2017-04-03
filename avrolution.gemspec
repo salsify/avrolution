@@ -41,5 +41,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'diffy'
   spec.add_runtime_dependency 'private_attr'
   spec.add_runtime_dependency 'netrc'
+  spec.add_runtime_dependency 'activesupport'
   spec.add_runtime_dependency 'activemodel'
 end
