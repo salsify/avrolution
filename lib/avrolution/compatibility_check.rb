@@ -16,7 +16,7 @@ module Avrolution
     private_attr_reader :schema_registry, :compatibility_breaks,
                         :logger
 
-    def initialize(logger: Avrolution::PassthruLogger.new($stdout))
+    def initialize(logger: Avrolution.logger)
       @incompatible_schemas = []
       @schema_registry = build_schema_registry
       @compatibility_breaks = Avrolution::CompatibilityBreaksFile.load

@@ -17,7 +17,7 @@ module Avrolution
                  fingerprint:,
                  with_compatibility: NONE,
                  after_compatibility: nil,
-                 logger: Avrolution::PassthruLogger.new($stdout))
+                 logger: Avrolution.logger)
 
       compatibility_break = Avrolution::CompatibilityBreak.new(name, fingerprint, with_compatibility, after_compatibility)
       compatibility_break.validate!
