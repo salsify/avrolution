@@ -18,7 +18,7 @@ module Avrolution
     attr_accessor :logger
   end
 
-  @logger = Avrolution::PassthruLogger.new($stdout)
+  self.logger = Avrolution::PassthruLogger.new($stdout)
 
   def self.root
     raise('root must be set') unless @root

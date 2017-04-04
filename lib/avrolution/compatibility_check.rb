@@ -1,6 +1,6 @@
 require 'private_attr'
 require 'diffy'
-require 'avromatic'
+require 'avromatic/schema_registry_patch'
 
 module Avrolution
   class CompatibilityCheck
