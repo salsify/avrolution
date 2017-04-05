@@ -24,6 +24,11 @@ Or install it yourself as:
 
     $ gem install avrolution
 
+Within a Rails project, create an `avro_compatibility_breaks.txt` file at
+`Rails.root` by running:
+
+    $ rails generate avrolution:install
+
 ## Configuration
 
 The gem supports the following configuration:

@@ -1,0 +1,20 @@
+# This file is used to declare compatibility breaks for Avro JSON schemas.
+# It is consulted when running the avro:check_compatibility rake task
+# and during the deployment of new schema versions.
+#
+# Entries in the file have the following format:
+#
+#   name fingerprint [with_compatibility] [after_compatibility]
+#
+# name: The full name of the schema, including namespace.
+#
+# fingerprint: The SHA256 resolution fingerprint for the schema in hex.
+#
+# with_compatibility: The compatibility level to check against, and the level
+#   to use during deployment. Defaults to NONE.
+#
+# after_compatibility: Optional compatibility level to set after a new schema
+#   version is deployed.
+#
+# See https://github.com/salisfy/avrolution for more information.
+
