@@ -21,8 +21,7 @@ module Avrolution
   self.logger = Avrolution::PassthruLogger.new($stdout)
 
   def self.root
-    raise('root must be set') unless @root
-    @root
+    @root || raise('root must be set')
   end
 
   def self.compatibility_breaks_file
