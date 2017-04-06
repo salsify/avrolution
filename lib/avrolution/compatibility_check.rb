@@ -1,6 +1,7 @@
+require 'avro-resolution_canonical_form'
 require 'private_attr'
 require 'diffy'
-require 'avromatic/schema_registry_patch'
+require 'avro_schema_registry-client'
 
 module Avrolution
   class CompatibilityCheck
@@ -101,8 +102,8 @@ module Avrolution
     end
 
     def build_schema_registry
-      AvroTurf::ConfluentSchemaRegistry.new(Avrolution.compatibility_schema_registry_url,
-                                            logger: Avrolution.logger)
+      AvroSchemaRegistry::Client.new(Avrolution.compatibility_schema_registry_url,
+                                     logger: Avrolution.logger)
     end
   end
 end
