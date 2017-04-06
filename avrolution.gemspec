@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov'
 
   spec.add_runtime_dependency 'avro-salsify-fork', '1.9.0.5'
-  spec.add_runtime_dependency 'avromatic', '0.21.0.rc0' # TODO
+  spec.add_runtime_dependency 'avro_schema_registry-client'
   spec.add_runtime_dependency 'diffy'
   spec.add_runtime_dependency 'private_attr'
   spec.add_runtime_dependency 'activesupport'
