@@ -78,8 +78,8 @@ module Avrolution
     def report_incompatibility(json, schema, fullname, fingerprint)
       last_json = schema_registry.subject_version(fullname)['schema']
       last_schema = Avro::Schema.parse(last_json)
-      backward = last_schema.read?(schema)
-      forward = schema.read?(last_schema)
+      backward = schema.read?(last_schema)
+      forward = last_schema.read?(schema)
       compatibility_with_last = if backward && forward
                                   FULL
                                 elsif backward

@@ -19,11 +19,16 @@ describe Avrolution::CompatibilityCheck, :fakefs do
     let(:fingerprint) do
       Avro::Schema.parse(File.read(app_schema_file)).sha256_resolution_fingerprint.to_s(16)
     end
+    let(:new_json) do
+      {
+        type: :record,
+        name: 'com.salsify.app',
+        fields: [{ type: :string, name: :s, default: '' }]
+      }.to_json
+    end
 
     before do
-      File.write(app_schema_file, <<-JSON)
-{ "type": "record", "name": "com.salsify.app" }
-      JSON
+      File.write(app_schema_file, new_json)
     end
 
     context "when all schemas are compatible" do
@@ -39,34 +44,80 @@ describe Avrolution::CompatibilityCheck, :fakefs do
     end
 
     shared_examples_for "an incompatible schema" do
-      let(:old_version) do <<-JSON
-{ "type": "record", "name": "com.salsify.app", "fields": [{ "type": "int", "name": "i" }] }
-      JSON
+      let(:old_json) do
+        # no field default
+        {
+          type: :record,
+          name: 'com.salsify.app',
+          fields: [{ type: :int, name: :i }]
+        }.to_json
       end
+      let(:actual_compatibility) { 'BACKWARD' }
+      let(:config_compatibility) { 'FULL' }
 
       before do
-        allow(schema_registry).to receive(:subject_version).and_return('schema' => old_version)
-        allow(schema_registry).to receive(:subject_config).and_return('compatibility' => 'FULL')
+        allow(schema_registry).to receive(:subject_version).and_return('schema' => old_json)
+        allow(schema_registry).to receive(:subject_config).and_return('compatibility' => config_compatibility)
       end
 
       it "returns failure", :aggregate_failures do
         expect(check.call).not_to be_success
         expect(check.incompatible_schemas).to eq([app_schema_file])
 
-        expect(logger).to have_received(:info).with(/Compatibility with last version: FORWARD/)
-        expect(logger).to have_received(:info).with(/Current compatibility level: FULL/)
+        expect(logger).to have_received(:info).with(/Compatibility with last version: #{actual_compatibility}/)
+        expect(logger).to have_received(:info).with(/Current compatibility level: #{config_compatibility}/)
         expect(logger).to have_received(:info)
-                            .with(/rake avro:add_compatibility_break name=com\.salsify\.app fingerprint=#{fingerprint} with_compatibility=FORWARD/)
+          .with(/rake avro:add_compatibility_break name=com\.salsify\.app fingerprint=#{fingerprint} with_compatibility=#{actual_compatibility}/)
       end
     end
 
     context "when there is an incompatible schema" do
-
       before do
         allow(schema_registry).to receive(:compatible?).and_return(false)
       end
 
       it_behaves_like "an incompatible schema"
+
+      it_behaves_like "an incompatible schema" do
+        let(:actual_compatibility) { 'FORWARD' }
+        let(:old_json) do
+          # has field default
+          {
+            type: :record,
+            name: 'com.salsify.app',
+            fields: [{ type: :int, name: :i, default: 0 }]
+          }.to_json
+        end
+        let(:new_json) do
+          # no field default
+          {
+            type: :record,
+            name: 'com.salsify.app',
+            fields: [{ type: :string, name: :s }]
+          }.to_json
+        end
+      end
+
+      it_behaves_like "an incompatible schema" do
+        let(:config_compatibility) { 'FULL_TRANSITIVE' }
+        let(:actual_compatibility) { 'FULL' }
+        let(:old_json) do
+          # has field default
+          {
+            type: :record,
+            name: 'com.salsify.app',
+            fields: [{ type: :int, name: :i, default: 0 }]
+          }.to_json
+        end
+        let(:new_json) do
+          # has field default
+          {
+            type: :record,
+            name: 'com.salsify.app',
+            fields: [{ type: :string, name: :s, default: '' }]
+          }.to_json
+        end
+      end
     end
 
     context "when there is an incompatible schema with a compatibility break defined" do
