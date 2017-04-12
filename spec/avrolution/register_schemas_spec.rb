@@ -3,8 +3,7 @@ describe Avrolution::RegisterSchemas, :fakefs do
   let(:logger) { instance_double(Logger, info: nil) }
   let(:app_schema_path) { File.join(Avrolution.root, 'avro/schema') }
   let(:schema_files) { [] }
-
-  subject(:register_schemas) { described_class.new(schema_files) }
+  let(:register_schemas) { described_class.new(schema_files) }
 
   before do
     allow(ENV).to receive(:[]).and_call_original

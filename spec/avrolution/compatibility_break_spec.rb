@@ -38,8 +38,7 @@ describe Avrolution::CompatibilityBreak do
   describe "#validate!" do
     let(:with_compatibility) { 'NONE' }
     let(:after_compatibility) { nil }
-
-    subject(:compatibility_break) do
+    let(:compatibility_break) do
       described_class.new(name, fingerprint, with_compatibility, after_compatibility)
     end
 

@@ -34,16 +34,14 @@ module Avrolution
   end
 
   def self.compatibility_schema_registry_url
-    @compatibility_schema_registry_url ||= begin
-      raise 'compatibility_schema_registry_url must be set' unless ENV[COMPATIBILITY_SCHEMA_REGISTRY_URL]
-      ENV[COMPATIBILITY_SCHEMA_REGISTRY_URL]
+    @compatibility_schema_registry_url ||= ENV.fetch(COMPATIBILITY_SCHEMA_REGISTRY_URL) do
+      raise 'compatibility_schema_registry_url must be set'
     end
   end
 
   def self.deployment_schema_registry_url
-    @deployment_schema_registry_url ||= begin
-      raise 'deployment_schema_registry_url must be set' unless ENV[DEPLOYMENT_SCHEMA_REGISTRY_URL]
-      ENV[DEPLOYMENT_SCHEMA_REGISTRY_URL]
+    @deployment_schema_registry_url ||= ENV.fetch(DEPLOYMENT_SCHEMA_REGISTRY_URL) do
+      raise 'deployment_schema_registry_url must be set'
     end
   end
 
