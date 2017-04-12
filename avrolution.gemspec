@@ -29,7 +29,8 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.12'
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec', '~> 3.4'
+  spec.add_development_dependency 'rspec', '~> 3.5'
+  spec.add_development_dependency 'rspec-its'
   spec.add_development_dependency 'salsify_rubocop', '~> 0.47.2'
   spec.add_development_dependency 'overcommit'
   spec.add_development_dependency 'fakefs'
@@ -41,4 +42,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'private_attr'
   spec.add_runtime_dependency 'activesupport'
   spec.add_runtime_dependency 'activemodel'
+  spec.add_runtime_dependency 'procto'
 end

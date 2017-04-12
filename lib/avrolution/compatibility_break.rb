@@ -35,5 +35,11 @@ module Avrolution
     def line
       [name, fingerprint, with_compatibility, after_compatibility].compact.join(' ')
     end
+
+    def register_options
+      { with_compatibility: with_compatibility }.tap do |options|
+        options[:after_compatibility] = after_compatibility if after_compatibility.present?
+      end
+    end
   end
 end

@@ -7,6 +7,7 @@ require 'avrolution'
 # pp must be required prior to fakefs/spec_helpers
 require 'pp'
 require 'fakefs/spec_helpers'
+require 'rspec/its'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
@@ -21,7 +22,8 @@ Avrolution::CompatibilityBreak
 RSpec.configure do |config|
   config.before do
     Avrolution.root = '/schema_root'
-    Avrolution.compatibility_schema_registry_url = 'https://registry.example.com'
+    Avrolution.compatibility_schema_registry_url = 'https://compatibility.example.com'
+    Avrolution.deployment_schema_registry_url = 'https://deployment.example.com'
   end
 
   config.include FakeFS::SpecHelpers, fakefs: true

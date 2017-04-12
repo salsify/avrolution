@@ -1,6 +1,7 @@
 module Avrolution
 
   COMPATIBILITY_SCHEMA_REGISTRY_URL = 'COMPATIBILITY_SCHEMA_REGISTRY_URL'.freeze
+  DEPLOYMENT_SCHEMA_REGISTRY_URL = 'DEPLOYMENT_SCHEMA_REGISTRY_URL'.freeze
 
   class << self
     # Root directory to search for schemas, and default location for
@@ -14,6 +15,10 @@ module Avrolution
     # The URL (including any Basic Auth) for the schema registry to use for
     # compatibility checks
     attr_writer :compatibility_schema_registry_url
+
+    # The URL (including any Basic Auth) for the schema registry to use for
+    # deployment
+    attr_writer :deployment_schema_registry_url
 
     attr_accessor :logger
   end
@@ -32,6 +37,13 @@ module Avrolution
     @compatibility_schema_registry_url ||= begin
       raise 'compatibility_schema_registry_url must be set' unless ENV[COMPATIBILITY_SCHEMA_REGISTRY_URL]
       ENV[COMPATIBILITY_SCHEMA_REGISTRY_URL]
+    end
+  end
+
+  def self.deployment_schema_registry_url
+    @deployment_schema_registry_url ||= begin
+      raise 'deployment_schema_registry_url must be set' unless ENV[DEPLOYMENT_SCHEMA_REGISTRY_URL]
+      ENV[DEPLOYMENT_SCHEMA_REGISTRY_URL]
     end
   end
 
