@@ -39,8 +39,11 @@ The gem supports the following configuration:
 * `compatibility_breaks_file` - The path to the compability breaks file. Defaults
   to `#{Avrolution}.root/avro_compatibility_breaks.txt`.
 * `compatibility_schema_registry_url` - The URL for the schema registry to use
-  for compatibility checking. `ENV['COMPATIBILITY_SCHEMA_REGISTRY_URL]` is used
+  for compatibility checking. `ENV['COMPATIBILITY_SCHEMA_REGISTRY_URL']` is used
   as the default.
+* `deployment_schema_registry_url` - The URL for the schema registry to use
+  when registering new schema version. `ENV['DEPLOYMENT_SCHEMA_REGISTRY_URL']`
+  is used as the default.
 * `logger` - A logger used by the rake tasks in this gem. This does _NOT_ default
   to `Rails.logger` in Rails applications.
 
@@ -57,7 +60,7 @@ defined via a Railtie.
 This task does not require any arguments. It checks the
 compatibility of all Avro JSON schemas found recursively under `Avrolution.root`
 against the schema registry `Avroluion.compatibility_schema_registry_url` or
-`ENV['COMPATIBILITY_SCHEMA_REGISTRY_URL]`.
+`ENV['COMPATIBILITY_SCHEMA_REGISTRY_URL']`.
 
 ```bash
 rake avro:check_compatibility
@@ -75,6 +78,34 @@ require 'avrolution/rake/check_compatibility_task'
 Avrolution::Rake::CheckCompatibilityTask.define
 ```
 
+### Avro Register Schemas Rake Task
+
+There is a rake task to register new schemas.
+
+For Rails applications, the `avro:register_schemas` task is automatically
+defined via a Railtie.
+
+This rake task requires a comma-separated list of files for the schemas to register.
+
+```bash
+rake avro:register_schemas schemas=/app/avro/schemas/one.avsc,/app/avro/schema/two.avsc
+```
+
+Schemas are registered against the schema registry
+`Avroluion.deployment_schema_registry_url` or
+`ENV['DEPLOYMENT_SCHEMA_REGISTRY_URL']`.
+
+The `Avrolution.compatibility_breaks_file` is consulted prior to registering the
+schema, and if an entry is found then the specified compatibility settings are
+used.
+
+For non-Rails projects, tasks can be defined as:
+
+```ruby
+require 'avroluation/rake/register_schemas_task'
+Avrolution::Rake::RegisterSchemasTask.define
+```
+
 ### Avro Add Compatibility Break Rake Task
 
 There is a rake task add an entry to the `Avrolution.compatibility_breaks_file`.
@@ -85,8 +116,6 @@ This rake task accepts the following arguments:
 * `with_compatibility` - Optional compatibility level to use for the check and
  during registration.
 * `after_compatibility` - Optional compatibility level to set after registration.
-
-(The registration support will be available in a future version of this gem.)
 
 ```bash
 rake avro:add_compatibility_break name=com.salsify.alerts.example_value \
