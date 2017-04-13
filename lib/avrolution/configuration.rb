@@ -34,12 +34,14 @@ module Avrolution
   end
 
   def self.compatibility_schema_registry_url
+    @compatibility_schema_registry_url = @compatibility_schema_registry_url.call if @compatibility_schema_registry_url.is_a?(Proc)
     @compatibility_schema_registry_url ||= ENV.fetch(COMPATIBILITY_SCHEMA_REGISTRY_URL) do
       raise 'compatibility_schema_registry_url must be set'
     end
   end
 
   def self.deployment_schema_registry_url
+    @deployment_schema_registry_url = @deployment_schema_registry_url.call if @deployment_schema_registry_url.is_a?(Proc)
     @deployment_schema_registry_url ||= ENV.fetch(DEPLOYMENT_SCHEMA_REGISTRY_URL) do
       raise 'deployment_schema_registry_url must be set'
     end

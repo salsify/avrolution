@@ -1,5 +1,9 @@
 # avrolution
 
+## v0.4.0
+- Support a Proc for the configuration of `compatibility_schema_registry_url`
+  and `deployment_schema_registry_url`.
+
 ## v0.3.0
 - Add rake task to register new schema versions.
 
