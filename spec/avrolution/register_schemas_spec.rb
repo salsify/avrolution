@@ -28,19 +28,19 @@ describe Avrolution::RegisterSchemas, :fakefs do
     end
 
     before do
-      allow(schema_registry).to receive(:register)
+      allow(schema_registry).to receive(:register_without_lookup)
       File.write(app_schema_file, json)
     end
 
     it "registers the specified schema file" do
       register_schemas.call
-      expect(schema_registry).to have_received(:register)
+      expect(schema_registry).to have_received(:register_without_lookup)
         .with(fullname, json, {})
     end
 
     context "when the new schema is incompatible" do
       before do
-        allow(schema_registry).to receive(:register).and_raise(Excon::Error::Conflict.new(409))
+        allow(schema_registry).to receive(:register_without_lookup).and_raise(Excon::Error::Conflict.new(409))
       end
 
       it "raises an error" do
@@ -62,7 +62,7 @@ describe Avrolution::RegisterSchemas, :fakefs do
 
       it "registers the specified schema file" do
         register_schemas.call
-        expect(schema_registry).to have_received(:register)
+        expect(schema_registry).to have_received(:register_without_lookup)
           .with(fullname, json, with_compatibility: with_compatibility, after_compatibility: after_compatibility)
       end
     end
