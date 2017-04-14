@@ -1,8 +1,5 @@
 module Avrolution
 
-  COMPATIBILITY_SCHEMA_REGISTRY_URL = 'COMPATIBILITY_SCHEMA_REGISTRY_URL'.freeze
-  DEPLOYMENT_SCHEMA_REGISTRY_URL = 'DEPLOYMENT_SCHEMA_REGISTRY_URL'.freeze
-
   class << self
     # Root directory to search for schemas, and default location for
     # compatibility breaks file
@@ -21,6 +18,22 @@ module Avrolution
     attr_writer :deployment_schema_registry_url
 
     attr_accessor :logger
+
+    def fetch_url(label)
+      env_name = "#{label.upcase}_SCHEMA_REGISTRY_URL"
+      ivar_name = "@#{env_name.downcase}"
+      env_value = ENV[env_name]
+      result = if env_value
+                 env_value
+               elsif instance_variable_get(ivar_name)
+                 ivar_value = instance_variable_get(ivar_name)
+                 ivar_value = instance_variable_set(ivar_name, ivar_value.call) if ivar_value.is_a?(Proc)
+                 ivar_value
+               end
+
+      raise "#{env_name.downcase} must be set" if result.blank?
+      result
+    end
   end
 
   self.logger = Avrolution::PassthruLogger.new($stdout)
@@ -34,17 +47,11 @@ module Avrolution
   end
 
   def self.compatibility_schema_registry_url
-    @compatibility_schema_registry_url = @compatibility_schema_registry_url.call if @compatibility_schema_registry_url.is_a?(Proc)
-    @compatibility_schema_registry_url ||= ENV.fetch(COMPATIBILITY_SCHEMA_REGISTRY_URL) do
-      raise 'compatibility_schema_registry_url must be set'
-    end
+    fetch_url('compatibility')
   end
 
   def self.deployment_schema_registry_url
-    @deployment_schema_registry_url = @deployment_schema_registry_url.call if @deployment_schema_registry_url.is_a?(Proc)
-    @deployment_schema_registry_url ||= ENV.fetch(DEPLOYMENT_SCHEMA_REGISTRY_URL) do
-      raise 'deployment_schema_registry_url must be set'
-    end
+    fetch_url('deployment')
   end
 
   def self.configure
