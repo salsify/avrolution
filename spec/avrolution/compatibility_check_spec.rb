@@ -31,6 +31,15 @@ describe Avrolution::CompatibilityCheck, :fakefs do
       File.write(app_schema_file, new_json)
     end
 
+    context "when there are schema files under vendor/bundle" do
+      let(:app_schema_path) { File.join(Avrolution.root, 'vendor/bundle') }
+      let(:new_json) { 'this is invalid json' }
+
+      it "ignores schema files under vendor/bundle" do
+        expect(check.call).to be_success
+      end
+    end
+
     context "when all schemas are compatible" do
       before do
         allow(schema_registry).to receive(:compatible?).and_return(true)
