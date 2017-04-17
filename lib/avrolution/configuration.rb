@@ -1,5 +1,8 @@
 module Avrolution
 
+  COMPATIBILITY = 'compatibility'.freeze
+  DEPLOYMENT = 'deployment'.freeze
+
   class << self
     # Root directory to search for schemas, and default location for
     # compatibility breaks file
@@ -47,11 +50,11 @@ module Avrolution
   end
 
   def self.compatibility_schema_registry_url
-    fetch_url('compatibility')
+    fetch_url(COMPATIBILITY)
   end
 
   def self.deployment_schema_registry_url
-    fetch_url('deployment')
+    fetch_url(DEPLOYMENT)
   end
 
   def self.configure

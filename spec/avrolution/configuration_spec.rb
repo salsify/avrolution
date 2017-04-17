@@ -83,6 +83,7 @@ describe Avrolution, "configuration" do
     context "when the environment variable is set" do
       let(:env_value) { 'http://environment.example.com' }
       let(:env_var_name) { 'DEPLOYMENT_SCHEMA_REGISTRY_URL' }
+
       before do
         allow(ENV).to receive(:[]).with(env_var_name).and_return(env_value)
       end
