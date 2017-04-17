@@ -1,5 +1,12 @@
 # avrolution
 
+## v0.4.0
+- Support a Proc for the configuration of `compatibility_schema_registry_url`
+  and `deployment_schema_registry_url`.
+- Environment variables now take priority over assigned values for
+  `Avrolution.compatibility_schema_registry_url` and
+  `Avrolution.deployment_schema_registry_url`.
+
 ## v0.3.0
 - Add rake task to register new schema versions.
 

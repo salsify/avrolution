@@ -39,11 +39,11 @@ The gem supports the following configuration:
 * `compatibility_breaks_file` - The path to the compability breaks file. Defaults
   to `#{Avrolution}.root/avro_compatibility_breaks.txt`.
 * `compatibility_schema_registry_url` - The URL for the schema registry to use
-  for compatibility checking. `ENV['COMPATIBILITY_SCHEMA_REGISTRY_URL']` is used
-  as the default.
+  for compatibility checking, or a Proc to determine the value.
+  `ENV['COMPATIBILITY_SCHEMA_REGISTRY_URL']` overrides this value if set.
 * `deployment_schema_registry_url` - The URL for the schema registry to use
-  when registering new schema version. `ENV['DEPLOYMENT_SCHEMA_REGISTRY_URL']`
-  is used as the default.
+  when registering new schema version, or a Proc to determine the value.
+  `ENV['DEPLOYMENT_SCHEMA_REGISTRY_URL']` overrides this value if set.
 * `logger` - A logger used by the rake tasks in this gem. This does _NOT_ default
   to `Rails.logger` in Rails applications.
 
@@ -59,8 +59,8 @@ defined via a Railtie.
 
 This task does not require any arguments. It checks the
 compatibility of all Avro JSON schemas found recursively under `Avrolution.root`
-against the schema registry `Avroluion.compatibility_schema_registry_url` or
-`ENV['COMPATIBILITY_SCHEMA_REGISTRY_URL']`.
+against the schema registry `ENV['COMPATIBILITY_SCHEMA_REGISTRY_URL']` or
+`Avroluion.compatibility_schema_registry_url`.
 
 ```bash
 rake avro:check_compatibility
@@ -92,8 +92,8 @@ rake avro:register_schemas schemas=/app/avro/schemas/one.avsc,/app/avro/schema/t
 ```
 
 Schemas are registered against the schema registry
-`Avroluion.deployment_schema_registry_url` or
-`ENV['DEPLOYMENT_SCHEMA_REGISTRY_URL']`.
+`ENV['DEPLOYMENT_SCHEMA_REGISTRY_URL']` or
+`Avroluion.deployment_schema_registry_url`.
 
 The `Avrolution.compatibility_breaks_file` is consulted prior to registering the
 schema, and if an entry is found then the specified compatibility settings are
