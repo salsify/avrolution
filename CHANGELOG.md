@@ -1,5 +1,9 @@
 # avrolution
 
+## v0.4.1
+- Exclude `vendor/bundle` under `Avrolution.root` when checking schema
+  compatibility.
+
 ## v0.4.0
 - Support a Proc for the configuration of `compatibility_schema_registry_url`
   and `deployment_schema_registry_url`.
