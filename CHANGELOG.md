@@ -1,5 +1,8 @@
 # avrolution
 
+## v0.4.2
+- Fix typo in template file.
+
 ## v0.4.1
 - Exclude `vendor/bundle` under `Avrolution.root` when checking schema
   compatibility.

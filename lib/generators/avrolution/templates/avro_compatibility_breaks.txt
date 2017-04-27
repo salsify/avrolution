@@ -16,5 +16,5 @@
 # after_compatibility: Optional compatibility level to set after a new schema
 #   version is deployed.
 #
-# See https://github.com/salisfy/avrolution for more information.
+# See https://github.com/salsify/avrolution for more information.
 
