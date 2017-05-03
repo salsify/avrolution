@@ -1,5 +1,8 @@
 # avrolution
 
+## v0.4.3
+- Allow deleted schema files during deploy.
+
 ## v0.4.2
 - Fix typo in template file.
 

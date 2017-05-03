@@ -70,10 +70,10 @@ describe Avrolution::RegisterSchemas, :fakefs do
     context "when a schema file does not exist" do
       let(:schema_files) { File.join(app_schema_path, '/does/not/exist.avsc') }
 
-      it "raises a file not found error" do
+      it "does not raise an error" do
         expect do
           register_schemas.call
-        end.to raise_error(/No such file or directory/)
+        end.not_to raise_error
       end
     end
   end

@@ -50,9 +50,11 @@ module Avrolution
 
     def schemas
       @schemas ||= schema_files.map do |schema_file|
-        json = File.read(schema_file)
-        [json, Avro::Schema.parse(json)]
-      end
+        if File.exist?(schema_file)
+          json = File.read(schema_file)
+          [json, Avro::Schema.parse(json)]
+        end
+      end.compact
     end
 
     def build_schema_registry
