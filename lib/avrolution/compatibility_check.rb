@@ -11,6 +11,7 @@ module Avrolution
 
     NONE = 'NONE'.freeze
     FULL = 'FULL'.freeze
+    BOTH = 'BOTH'.freeze
     BACKWARD = 'BACKWARD'.freeze
     FORWARD = 'FORWARD'.freeze
 
@@ -97,6 +98,7 @@ module Avrolution
       logger.info(Diffy::Diff.new(last_json, json, context: 3).to_s) unless compatibility_with_last == FULL
 
       compatibility = schema_registry.subject_config(fullname)['compatibility'] || schema_registry.global_config['compatibility']
+      compatibility = FULL if compatibility == BOTH
       logger.info("... Current compatibility level: #{compatibility}")
       logger.info(
         "\n  To allow a compatibility break, run:\n" \
