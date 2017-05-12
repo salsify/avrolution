@@ -1,5 +1,8 @@
 # avrolution
 
+## v0.4.4
+- Report current compatibility BOTH as FULL since BOTH is deprecated.
+
 ## v0.4.3
 - Allow deleted schema files during deploy.
 

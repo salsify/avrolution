@@ -62,7 +62,8 @@ describe Avrolution::CompatibilityCheck, :fakefs do
         }.to_json
       end
       let(:actual_compatibility) { 'BACKWARD' }
-      let(:config_compatibility) { 'FULL' }
+      let(:config_compatibility) { 'BOTH' }
+      let(:reported_config_compatibility) { 'FULL' }
 
       before do
         allow(schema_registry).to receive(:subject_version).and_return('schema' => old_json)
@@ -74,7 +75,7 @@ describe Avrolution::CompatibilityCheck, :fakefs do
         expect(check.incompatible_schemas).to eq([app_schema_file])
 
         expect(logger).to have_received(:info).with(/Compatibility with last version: #{actual_compatibility}/)
-        expect(logger).to have_received(:info).with(/Current compatibility level: #{config_compatibility}/)
+        expect(logger).to have_received(:info).with(/Current compatibility level: #{reported_config_compatibility}/)
         expect(logger).to have_received(:info)
           .with(/rake avro:add_compatibility_break name=com\.salsify\.app fingerprint=#{fingerprint} with_compatibility=#{actual_compatibility}/)
       end
