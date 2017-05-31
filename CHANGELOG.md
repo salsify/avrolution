@@ -1,5 +1,8 @@
 # avrolution
 
+## v0.5.0
+- Require 'avro-patches' instead of `avro-salsify-fork`.
+
 ## v0.4.4
 - Report current compatibility BOTH as FULL since BOTH is deprecated.
 
