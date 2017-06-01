@@ -1,5 +1,9 @@
 # avrolution
 
+## v0.5.0
+- Require `avro-resolution_canonical_form` v0.2.0 or later to use
+  `avro-patches` instead of `avro-salsify-fork`.
+
 ## v0.4.4
 - Report current compatibility BOTH as FULL since BOTH is deprecated.
 
