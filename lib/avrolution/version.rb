@@ -1,3 +1,3 @@
 module Avrolution
-  VERSION = '0.5.0.rc0'.freeze
+  VERSION = '0.5.0'.freeze
 end
