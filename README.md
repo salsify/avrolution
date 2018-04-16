@@ -58,7 +58,7 @@ For Rails applications, the `avro:check_compatibility` task is automatically
 defined via a Railtie.
 
 This task does not require any arguments. It checks the
-compatibility of all Avro JSON schemas found recursively under `Avrolution.root`
+compatibility of all unregistered Avro JSON schemas found recursively under `Avrolution.root`
 against the schema registry `ENV['COMPATIBILITY_SCHEMA_REGISTRY_URL']` or
 `Avroluion.compatibility_schema_registry_url`.
 

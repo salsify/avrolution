@@ -1,5 +1,8 @@
 # avrolution
 
+## v0.6.0 (unreleased)
+- Do not check compatibility for previously registered schemas.
+
 ## v0.5.0
 - Require `avro-resolution_canonical_form` v0.2.0 or later to use
   `avro-patches` instead of `avro-salsify-fork`.
