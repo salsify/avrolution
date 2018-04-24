@@ -54,6 +54,7 @@ module Avrolution
       fingerprint = schema.sha256_resolution_fingerprint.to_s(16)
 
       logger.info("Checking compatibility: #{fullname}")
+      return if schema_registered?(fullname, schema)
       compatible = schema_registry.compatible?(fullname, schema, 'latest')
 
       if compatible.nil?
@@ -63,6 +64,12 @@ module Avrolution
         incompatible_schemas << file
         report_incompatibility(json, schema, fullname, fingerprint)
       end
+    end
+
+    def schema_registered?(fullname, schema)
+      schema_registry.lookup_subject_schema(fullname, schema)
+    rescue Excon::Errors::NotFound
+      nil
     end
 
     # For a schema that is incompatible with the latest registered schema,

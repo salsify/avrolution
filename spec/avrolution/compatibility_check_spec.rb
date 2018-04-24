@@ -2,6 +2,7 @@ describe Avrolution::CompatibilityCheck, :fakefs do
   let(:schema_registry) { instance_double(AvroSchemaRegistry::Client) }
   let(:app_schema_path) { File.join(Avrolution.root, 'avro/schema') }
   let(:logger) { instance_double(Logger, info: nil) }
+  let(:not_found_error) { Excon::Errors::NotFound.new('Not Found') }
 
   before do
     allow(ENV).to receive(:[]).and_call_original
@@ -43,12 +44,27 @@ describe Avrolution::CompatibilityCheck, :fakefs do
     context "when all schemas are compatible" do
       before do
         allow(schema_registry).to receive(:compatible?).and_return(true)
+        allow(schema_registry).to receive(:lookup_subject_schema).and_raise(not_found_error)
       end
 
       it "returns success" do
         expect(check.call).to be_success
         expect(schema_registry).to have_received(:compatible?)
                                      .with('com.salsify.app', Avro::Schema, 'latest')
+      end
+    end
+
+    context "when all schemas are already registered" do
+      let(:id) { rand(1..100) }
+
+      before do
+        allow(schema_registry).to receive(:lookup_subject_schema).and_return(id)
+      end
+
+      it "returns success" do
+        expect(check.call).to be_success
+        expect(schema_registry).to have_received(:lookup_subject_schema)
+                                     .with('com.salsify.app', Avro::Schema)
       end
     end
 
@@ -66,6 +82,7 @@ describe Avrolution::CompatibilityCheck, :fakefs do
       let(:reported_config_compatibility) { 'FULL' }
 
       before do
+        allow(schema_registry).to receive(:lookup_subject_schema).and_raise(not_found_error)
         allow(schema_registry).to receive(:subject_version).and_return('schema' => old_json)
         allow(schema_registry).to receive(:subject_config).and_return('compatibility' => config_compatibility)
       end
@@ -135,6 +152,7 @@ describe Avrolution::CompatibilityCheck, :fakefs do
       let(:with_compatibility) { 'NONE' }
 
       before do
+        allow(schema_registry).to receive(:lookup_subject_schema).and_return(not_found_error)
         allow(schema_registry).to receive(:compatible?).with('com.salsify.app', Avro::Schema, 'latest').and_return(false)
         FileUtils.mkdir_p(File.dirname(compatibility_breaks_file))
         File.write(compatibility_breaks_file, "com.salsify.app #{fingerprint} #{with_compatibility}\n")
