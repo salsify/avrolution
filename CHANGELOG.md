@@ -1,6 +1,6 @@
 # avrolution
 
-## v0.6.0 (unreleased)
+## v0.6.0
 - Do not check compatibility for previously registered schemas.
 
 ## v0.5.0
