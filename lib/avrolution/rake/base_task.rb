@@ -1,3 +1,5 @@
+require 'rake/tasklib'
+
 module Avrolution
   module Rake
     class BaseTask < ::Rake::TaskLib
