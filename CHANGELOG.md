@@ -1,5 +1,8 @@
 # avrolution
 
+## v0.6.1
+- Add missing require to `Avrolution::Rake::BaseTask`.
+
 ## v0.6.0
 - Do not check compatibility for previously registered schemas.
 
