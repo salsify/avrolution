@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Avrolution::CompatibilityCheck, :fakefs do
   let(:schema_registry) { instance_double(AvroSchemaRegistry::Client) }
   let(:app_schema_path) { File.join(Avrolution.root, 'avro/schema') }
@@ -93,8 +95,9 @@ describe Avrolution::CompatibilityCheck, :fakefs do
 
         expect(logger).to have_received(:info).with(/Compatibility with last version: #{actual_compatibility}/)
         expect(logger).to have_received(:info).with(/Current compatibility level: #{reported_config_compatibility}/)
-        expect(logger).to have_received(:info)
-          .with(/rake avro:add_compatibility_break name=com\.salsify\.app fingerprint=#{fingerprint} with_compatibility=#{actual_compatibility}/)
+        expect(logger).to have_received(:info).with(
+          /rake avro:add_compatibility_break name=com\.salsify\.app fingerprint=#{fingerprint} with_compatibility=#{actual_compatibility}/ # rubocop:disable Layout/LineLength
+        )
       end
     end
 
@@ -153,7 +156,8 @@ describe Avrolution::CompatibilityCheck, :fakefs do
 
       before do
         allow(schema_registry).to receive(:lookup_subject_schema).and_return(not_found_error)
-        allow(schema_registry).to receive(:compatible?).with('com.salsify.app', Avro::Schema, 'latest').and_return(false)
+        allow(schema_registry).to receive(:compatible?).with('com.salsify.app', Avro::Schema, 'latest')
+                                                       .and_return(false)
         FileUtils.mkdir_p(File.dirname(compatibility_breaks_file))
         File.write(compatibility_breaks_file, "com.salsify.app #{fingerprint} #{with_compatibility}\n")
       end

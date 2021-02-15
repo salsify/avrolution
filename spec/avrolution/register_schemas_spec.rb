@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Avrolution::RegisterSchemas, :fakefs do
   let(:schema_registry) { instance_double(AvroSchemaRegistry::Client) }
   let(:logger) { instance_double(Logger, info: nil) }
@@ -57,7 +59,10 @@ describe Avrolution::RegisterSchemas, :fakefs do
 
       before do
         FileUtils.mkdir_p(File.dirname(compatibility_breaks_file))
-        File.write(compatibility_breaks_file, "#{fullname} #{fingerprint} #{with_compatibility} #{after_compatibility}\n")
+        File.write(
+          compatibility_breaks_file,
+          "#{fullname} #{fingerprint} #{with_compatibility} #{after_compatibility}\n"
+        )
       end
 
       it "registers the specified schema file" do

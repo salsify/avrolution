@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rake/tasklib'
 
 module Avrolution
@@ -11,6 +13,7 @@ module Avrolution
       end
 
       def initialize(name: nil, dependencies: [])
+        super()
         @name = name
         @task_namespace = :avro
         @dependencies = dependencies

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Avrolution
 
-  COMPATIBILITY = 'compatibility'.freeze
-  DEPLOYMENT = 'deployment'.freeze
+  COMPATIBILITY = 'compatibility'
+  DEPLOYMENT = 'deployment'
 
   class << self
     # Root directory to search for schemas, and default location for
@@ -35,6 +37,7 @@ module Avrolution
                end
 
       raise "#{env_name.downcase} must be set" if result.blank?
+
       result
     end
   end

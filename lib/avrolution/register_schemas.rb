@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'avro_schema_registry-client'
 require 'private_attr'
 require 'procto'

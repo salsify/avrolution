@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'avro-resolution_canonical_form'
 require 'private_attr'
 require 'diffy'
@@ -9,11 +11,11 @@ module Avrolution
 
     attr_reader :incompatible_schemas
 
-    NONE = 'NONE'.freeze
-    FULL = 'FULL'.freeze
-    BOTH = 'BOTH'.freeze
-    BACKWARD = 'BACKWARD'.freeze
-    FORWARD = 'FORWARD'.freeze
+    NONE = 'NONE'
+    FULL = 'FULL'
+    BOTH = 'BOTH'
+    BACKWARD = 'BACKWARD'
+    FORWARD = 'FORWARD'
 
     private_attr_reader :schema_registry, :compatibility_breaks,
                         :logger
@@ -55,6 +57,7 @@ module Avrolution
 
       logger.info("Checking compatibility: #{fullname}")
       return if schema_registered?(fullname, schema)
+
       compatible = schema_registry.compatible?(fullname, schema, 'latest')
 
       if compatible.nil?
@@ -80,7 +83,9 @@ module Avrolution
 
       if compatibility_break
         logger.info("... Checking compatibility with level set to #{compatibility_break.with_compatibility}")
-        schema_registry.compatible?(fullname, schema, 'latest', with_compatibility: compatibility_break.with_compatibility)
+        schema_registry.compatible?(
+          fullname, schema, 'latest', with_compatibility: compatibility_break.with_compatibility
+        )
       else
         false
       end
@@ -104,12 +109,14 @@ module Avrolution
       logger.info("... Compatibility with last version: #{compatibility_with_last}")
       logger.info(Diffy::Diff.new(last_json, json, context: 3).to_s) unless compatibility_with_last == FULL
 
-      compatibility = schema_registry.subject_config(fullname)['compatibility'] || schema_registry.global_config['compatibility']
+      compatibility = schema_registry.subject_config(fullname)['compatibility'] ||
+        schema_registry.global_config['compatibility']
       compatibility = FULL if compatibility == BOTH
       logger.info("... Current compatibility level: #{compatibility}")
       logger.info(
         "\n  To allow a compatibility break, run:\n" \
-        "    rake avro:add_compatibility_break name=#{fullname} fingerprint=#{fingerprint} with_compatibility=#{compatibility_with_last} [after_compatibility=<LEVEL>]\n"
+        "    rake avro:add_compatibility_break name=#{fullname} fingerprint=#{fingerprint} " \
+        "with_compatibility=#{compatibility_with_last} [after_compatibility=<LEVEL>]\n"
       )
     end
 

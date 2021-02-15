@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'avrolution/rake/base_task'
 
 module Avrolution

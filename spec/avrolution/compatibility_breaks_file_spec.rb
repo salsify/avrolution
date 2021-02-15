@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Avrolution::CompatibilityBreaksFile, :fakefs do
   let(:logger) { instance_double(Logger, info: nil) }
 
@@ -33,13 +35,19 @@ describe Avrolution::CompatibilityBreaksFile, :fakefs do
       it "raises an error when with compatibility is invalid" do
         expect do
           described_class.add(name: name, fingerprint: fingerprint, with_compatibility: 'FOO')
-        end.to raise_error(Avrolution::CompatibilityBreak::ValidationError, 'With compatibility is not included in the list')
+        end.to raise_error(
+          Avrolution::CompatibilityBreak::ValidationError,
+          'With compatibility is not included in the list'
+        )
       end
 
       it "raises an error when after compatibility is invalid" do
         expect do
           described_class.add(name: name, fingerprint: fingerprint, after_compatibility: 'FOO')
-        end.to raise_error(Avrolution::CompatibilityBreak::ValidationError, 'After compatibility is not included in the list')
+        end.to raise_error(
+          Avrolution::CompatibilityBreak::ValidationError,
+          'After compatibility is not included in the list'
+        )
       end
     end
 
@@ -62,13 +70,15 @@ describe Avrolution::CompatibilityBreaksFile, :fakefs do
                             with_compatibility: with_compatibility,
                             after_compatibility: after_compatibility,
                             logger: logger)
-        expect(File.read(described_class.path)).to eq("#{name} #{fingerprint} #{with_compatibility} #{after_compatibility}\n")
+        expect(File.read(described_class.path)).to eq(
+          "#{name} #{fingerprint} #{with_compatibility} #{after_compatibility}\n"
+        )
       end
     end
 
     context "when the line to be added duplicates an existing entry" do
-      let(:file_contents) do <<-TEXT
-com.salsify.foo ABC123 BACKWARD
+      let(:file_contents) do <<~TEXT
+        com.salsify.foo ABC123 BACKWARD
       TEXT
       end
 
@@ -95,12 +105,12 @@ com.salsify.foo ABC123 BACKWARD
     end
 
     context "when the file exists" do
-      let(:key) { %w(com.salsify.foo ABC123) }
-      let(:file_contents) do <<-TEXT
-# ignore me
+      let(:key) { ['com.salsify.foo', 'ABC123'] }
+      let(:file_contents) do <<~TEXT
+        # ignore me
 
-com.salsify.foo ABC123 BACKWARD
-com.salsify.bar XYZ456 NONE FULL
+        com.salsify.foo ABC123 BACKWARD
+        com.salsify.bar XYZ456 NONE FULL
       TEXT
       end
 
@@ -113,8 +123,8 @@ com.salsify.bar XYZ456 NONE FULL
       end
 
       context "when the file contains invalid entries" do
-        let(:file_contents) do <<-TEXT
-ONE TWO THREE FOUR
+        let(:file_contents) do <<~TEXT
+          ONE TWO THREE FOUR
         TEXT
         end
 
@@ -126,9 +136,9 @@ ONE TWO THREE FOUR
       end
 
       context "when the file contains duplicate entries" do
-        let(:file_contents) do <<-TEXT
-com.salsify.foo ABC123 BACKWARD
-com.salsify.foo ABC123 FORWARD
+        let(:file_contents) do <<~TEXT
+          com.salsify.foo ABC123 BACKWARD
+          com.salsify.foo ABC123 FORWARD
         TEXT
         end
 

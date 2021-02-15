@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Avrolution
   class Railtie < Rails::Railtie
 
@@ -8,7 +10,7 @@ module Avrolution
     end
 
     rake_tasks do
-      load File.expand_path('../rake/rails_avrolution.rake', __FILE__)
+      load File.expand_path('rake/rails_avrolution.rake', __dir__)
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Avrolution::CompatibilityBreak do
   let(:name) { 'com.example.test' }
   let(:fingerprint) do
@@ -109,7 +111,9 @@ describe Avrolution::CompatibilityBreak do
 
       subject { described_class.new(name, fingerprint, with_compatibility, after_compatibility) }
 
-      its(:register_options) { is_expected.to eq(with_compatibility: with_compatibility, after_compatibility: after_compatibility) }
+      its(:register_options) do
+        is_expected.to eq(with_compatibility: with_compatibility, after_compatibility: after_compatibility)
+      end
     end
   end
 end

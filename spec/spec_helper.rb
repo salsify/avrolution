@@ -1,4 +1,6 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require 'simplecov'
 SimpleCov.start
 
@@ -9,7 +11,7 @@ require 'pp'
 require 'fakefs/spec_helpers'
 require 'rspec/its'
 
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
 
 # FakeFS does not play well with locales lazy-loaded by I18n, so generate
 # an error to pre-cache them.
