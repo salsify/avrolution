@@ -4,6 +4,14 @@ describe Avrolution::CompatibilityBreak do
     Avro::Schema.parse({ name: name, type: :record }.to_json).sha256_resolution_fingerprint.to_s(16)
   end
 
+  before do
+    Avro.disable_schema_name_validation = true if Avro.respond_to?(:disable_schema_name_validation=)
+  end
+
+  after do
+    Avro.disable_schema_name_validation = false if Avro.respond_to?(:disable_schema_name_validation=)
+  end
+
   context "validation" do
     let(:with_compatibility) { 'NONE' }
     let(:after_compatibility) { nil }
