@@ -1,5 +1,10 @@
 # avrolution
 
+## v0.7.0
+- Add support for Ruby 3.0.
+- Drop support for Ruby < 2.5.
+- Use frozen string literals.
+
 ## v0.6.1
 - Add missing require to `Avrolution::Rake::BaseTask`.
 

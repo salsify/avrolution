@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_model'
 
 module Avrolution
@@ -6,9 +8,16 @@ module Avrolution
 
     ValidationError = Class.new(StandardError)
 
-    VALID_COMPATIBILITY_VALUES = %w(BACKWARD BACKWARD_TRANSITIVE FORWARD
-                                    FORWARD_TRANSITIVE FULL FULL_TRANSITIVE NONE).map(&:freeze).freeze
-    NONE = 'NONE'.freeze
+    VALID_COMPATIBILITY_VALUES = [
+      'BACKWARD',
+      'BACKWARD_TRANSITIVE',
+      'FORWARD',
+      'FORWARD_TRANSITIVE',
+      'FULL',
+      'FULL_TRANSITIVE',
+      'NONE'
+    ].freeze
+    NONE = 'NONE'
 
     attr_reader :name, :fingerprint, :with_compatibility, :after_compatibility
 

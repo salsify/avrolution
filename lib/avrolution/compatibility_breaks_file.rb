@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Avrolution
   module CompatibilityBreaksFile
 
-    NONE = 'NONE'.freeze
+    NONE = 'NONE'
 
     class DuplicateEntryError < StandardError
       def initialize(key)
@@ -19,7 +21,9 @@ module Avrolution
                  after_compatibility: nil,
                  logger: Avrolution.logger)
 
-      compatibility_break = Avrolution::CompatibilityBreak.new(name, fingerprint, with_compatibility, after_compatibility)
+      compatibility_break = Avrolution::CompatibilityBreak.new(
+        name, fingerprint, with_compatibility, after_compatibility
+      )
       compatibility_break.validate!
 
       compatibility_breaks = load

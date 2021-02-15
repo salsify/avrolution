@@ -1,5 +1,6 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+# frozen_string_literal: true
+
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'avrolution/version'
 
@@ -27,21 +28,23 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.required_ruby_version = '>= 2.6'
+
   spec.add_development_dependency 'bundler', '~> 2.0'
+  spec.add_development_dependency 'fakefs'
+  spec.add_development_dependency 'overcommit'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.8'
-  spec.add_development_dependency 'rspec_junit_formatter'
   spec.add_development_dependency 'rspec-its'
-  spec.add_development_dependency 'salsify_rubocop', '~> 0.47.2'
-  spec.add_development_dependency 'overcommit'
-  spec.add_development_dependency 'fakefs'
+  spec.add_development_dependency 'rspec_junit_formatter'
+  spec.add_development_dependency 'salsify_rubocop', '~> 1.0.1'
   spec.add_development_dependency 'simplecov'
 
+  spec.add_runtime_dependency 'activemodel'
+  spec.add_runtime_dependency 'activesupport'
   spec.add_runtime_dependency 'avro-resolution_canonical_form', '>= 0.2.0'
   spec.add_runtime_dependency 'avro_schema_registry-client', '>= 0.2.0'
   spec.add_runtime_dependency 'diffy'
   spec.add_runtime_dependency 'private_attr'
-  spec.add_runtime_dependency 'activesupport'
-  spec.add_runtime_dependency 'activemodel'
   spec.add_runtime_dependency 'procto'
 end
