@@ -49,8 +49,15 @@ describe "rake tasks" do
 
     before do
       allow(Avrolution::CompatibilityBreaksFile).to receive(:add)
+      @original_name = ENV['name']
       ENV['name'] = 'test-name'
+      @original_fingerprint = ENV['fingerprint']
       ENV['fingerprint'] = 'test-fingerprint'
+    end
+
+    after do
+      ENV['name'] = @original_name
+      ENV['fingerprint'] = @original_fingerprint
     end
 
     it "adds a compatibility break entry" do
