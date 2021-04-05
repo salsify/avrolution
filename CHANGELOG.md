@@ -1,5 +1,8 @@
 # avrolution
 
+## v0.7.1
+- Adjust Rake task definitions to work with Ruby 3.0.
+
 ## v0.7.0
 - Add support for Ruby 3.0.
 - Drop support for Ruby < 2.6.
