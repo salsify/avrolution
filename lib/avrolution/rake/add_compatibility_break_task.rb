@@ -6,8 +6,8 @@ module Avrolution
   module Rake
     class AddCompatibilityBreakTask < BaseTask
 
-      def initialize(**options)
-        super(**options)
+      def initialize(**)
+        super
         @name ||= :add_compatibility_break
         @task_desc ||= 'Add an Avro schema compatibility break. Parameters: name, fingerprint, ' \
           'with_compatibility, after_compatibility'

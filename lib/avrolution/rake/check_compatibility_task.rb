@@ -6,8 +6,8 @@ module Avrolution
   module Rake
     class CheckCompatibilityTask < BaseTask
 
-      def initialize(**options)
-        super(**options)
+      def initialize(**)
+        super
         @name ||= :check_compatibility
         @task_desc ||= 'Check that all Avro schemas are compatible with latest registered in production'
       end
