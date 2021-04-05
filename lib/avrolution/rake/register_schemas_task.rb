@@ -6,8 +6,8 @@ module Avrolution
   module Rake
     class RegisterSchemasTask < BaseTask
 
-      def initialize(*)
-        super
+      def initialize(**options)
+        super(**options)
         @name ||= :register_schemas
         @task_desc ||= 'Register the specified Avro JSON schemas'
       end
