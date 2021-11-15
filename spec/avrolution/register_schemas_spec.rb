@@ -36,8 +36,9 @@ describe Avrolution::RegisterSchemas, :fakefs do
 
     it "registers the specified schema file" do
       register_schemas.call
+
       expect(schema_registry).to have_received(:register_without_lookup)
-        .with(fullname, json, {})
+        .with(fullname, json)
     end
 
     context "when the new schema is incompatible" do
