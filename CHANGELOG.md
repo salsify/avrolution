@@ -1,5 +1,9 @@
 # avrolution
 
+## v0.7.2
+- Fix a bug related to Ruby 3.0 keyword arguments in
+  AvroSchemaRegistry::Client#register_without_lookup.
+
 ## v0.7.1
 - Adjust Rake task definitions to work with Ruby 3.0.
 
