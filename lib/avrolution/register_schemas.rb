@@ -40,11 +40,11 @@ module Avrolution
       compatibility_break = compatibility_breaks[[fullname, fingerprint]]
 
       begin
-        if (opts = compatibility_break.try(:register_options))
+        if compatibility_break
           schema_registry.register_without_lookup(
             fullname,
             json,
-            **opts
+            **compatibility_break.register_options
           )
         else
           schema_registry.register_without_lookup(fullname, json)
