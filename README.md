@@ -111,7 +111,7 @@ Avrolution::Rake::RegisterSchemasTask.define
 This rake task allows you to register all schemas discovered under `Avrolution.root`.
 
 Similarly to the task `avro:register_schemas`, it will register them against the configured
-registry. Additionally, this task will auto included for Rails applications.
+registry. Additionally, this task will be auto included for Rails applications.
 
 ```bash
 rake avro:register_all_schemas
