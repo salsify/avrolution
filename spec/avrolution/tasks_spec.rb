@@ -31,12 +31,11 @@ describe "rake tasks" do
   describe "register_all_schemas" do
     let(:task_name) { 'avro:register_all_schemas' }
     let(:schema_files) { Avrolution::DiscoverSchemas.discover(Dir.pwd) }
-    let(:register_schemas) { Avrolution::RegisterSchemas.new(schema_files) }
+    let(:register_schemas) { instance_spy(Avrolution::RegisterSchemas) }
 
     before do
       allow(Avrolution::RegisterSchemas).to receive(:new).and_return(register_schemas)
       allow(Avrolution::DiscoverSchemas).to receive(:discover).and_return(schema_files)
-      allow(register_schemas).to receive(:call)
     end
 
     it "dispatches to a RegisterSchemas instance" do
