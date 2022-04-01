@@ -1,0 +1,9 @@
+{
+   "type" : "record",
+   "namespace" : "foo",
+   "name" : "person",
+   "fields" : [
+      { "name" : "Name" , "type" : "string" },
+      { "name" : "Age" , "type" : "int" }
+   ]
+}

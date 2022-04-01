@@ -1,5 +1,10 @@
 # avrolution
 
+## v0.8.0
+
+- Added the ability to register all schemas found under `Avrolution.root` with the task
+  `rake avro:register_all_schemas`.
+
 ## v0.7.2
 - Fix a bug related to Ruby 3.0 keyword arguments in
   AvroSchemaRegistry::Client#register_without_lookup.
