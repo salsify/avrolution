@@ -19,6 +19,7 @@ module Avrolution
 
         if schemas.blank?
           puts 'could not find any schemas'
+          exit(1)
         else
           Avrolution::RegisterSchemas.call(schemas)
         end
