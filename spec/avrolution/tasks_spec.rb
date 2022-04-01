@@ -28,6 +28,23 @@ describe "rake tasks" do
     end
   end
 
+  describe "register_all_schemas" do
+    let(:task_name) { 'avro:register_all_schemas' }
+    let(:schema_files) { Avrolution::DiscoverSchemas.discover(Dir.pwd) }
+    let(:register_schemas) { instance_spy(Avrolution::RegisterSchemas) }
+
+    before do
+      allow(Avrolution::RegisterSchemas).to receive(:new).and_return(register_schemas)
+      allow(Avrolution::DiscoverSchemas).to receive(:discover).and_return(schema_files)
+    end
+
+    it "dispatches to a RegisterSchemas instance" do
+      task.invoke
+
+      expect(register_schemas).to have_received(:call)
+    end
+  end
+
   describe "check_compatibility" do
     let(:task_name) { 'avro:check_compatibility' }
     let(:compatibility_check) { Avrolution::CompatibilityCheck.new }

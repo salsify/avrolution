@@ -17,6 +17,7 @@ require 'avrolution/configuration'
 require 'avrolution/compatibility_break'
 require 'avrolution/compatibility_breaks_file'
 require 'avrolution/compatibility_check'
+require 'avrolution/discover_schemas'
 require 'avrolution/register_schemas'
 
 require 'avrolution/railtie' if defined?(Rails)

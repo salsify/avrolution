@@ -106,6 +106,24 @@ require 'avroluation/rake/register_schemas_task'
 Avrolution::Rake::RegisterSchemasTask.define
 ```
 
+### Avro Register All Schemas Rake Task
+
+This rake task allows you to register all schemas discovered under `Avrolution.root`.
+
+Similarly to the task `avro:register_schemas`, it will register them against the configured
+registry. Additionally, this task will be auto included for Rails applications.
+
+```bash
+rake avro:register_all_schemas
+```
+
+For non-Rails projects, tasks can be defined as:
+
+```ruby
+require 'avroluation/rake/register_all_schemas_task'
+Avrolution::Rake::RegisterAllSchemasTask.define
+```
+
 ### Avro Add Compatibility Break Rake Task
 
 There is a rake task add an entry to the `Avrolution.compatibility_breaks_file`.

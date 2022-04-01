@@ -39,10 +39,7 @@ module Avrolution
     private
 
     def check_schemas(path)
-      vendor_bundle_path = File.join(path, 'vendor/bundle/')
-      Dir[File.join(path, '**/*.avsc')].reject do |file|
-        file.start_with?(vendor_bundle_path)
-      end.each do |schema_file|
+      Avrolution::DiscoverSchemas.discover(path).each do |schema_file|
         check_schema_compatibility(schema_file)
       end
     end
