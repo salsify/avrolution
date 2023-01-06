@@ -1,7 +1,10 @@
 # avrolution
 
+## v0.9.0
+- Add support for Ruby 3.2.
+- Drop support for Ruby 2.6.
+- 
 ## v0.8.0
-
 - Added the ability to register all schemas found under `Avrolution.root` with the task
   `rake avro:register_all_schemas`.
 
