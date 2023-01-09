@@ -36,10 +36,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'overcommit'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.12'
-  # rspec-mocks 3.12.2+ is required for Ruby 3.2.0 support
-  spec.add_development_dependency 'rspec-mocks', '>= 3.12.2'
   spec.add_development_dependency 'rspec-its'
   spec.add_development_dependency 'rspec_junit_formatter'
+  # rspec-mocks 3.12.2+ is required for Ruby 3.2.0 support
+  spec.add_development_dependency 'rspec-mocks', '>= 3.12.2'
   spec.add_development_dependency 'salsify_rubocop', '~> 1.0.1'
   spec.add_development_dependency 'simplecov'
 
