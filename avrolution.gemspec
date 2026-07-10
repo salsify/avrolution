@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.7'
+  spec.required_ruby_version = '>= 3.3'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'fakefs'
@@ -38,7 +38,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.12'
   spec.add_development_dependency 'rspec-its'
   spec.add_development_dependency 'rspec_junit_formatter'
-  # rspec-mocks 3.12.2+ is required for Ruby 3.2.0 support
   spec.add_development_dependency 'rspec-mocks', '>= 3.12.2'
   spec.add_development_dependency 'salsify_rubocop', '~> 1.0.1'
   spec.add_development_dependency 'simplecov'
