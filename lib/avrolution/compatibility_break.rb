@@ -46,7 +46,7 @@ module Avrolution
     end
 
     def register_options
-      { with_compatibility: with_compatibility }.tap do |options|
+      { with_compatibility: }.tap do |options|
         options[:after_compatibility] = after_compatibility if after_compatibility.present?
       end
     end

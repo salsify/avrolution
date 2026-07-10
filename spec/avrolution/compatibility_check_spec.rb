@@ -15,7 +15,7 @@ describe Avrolution::CompatibilityCheck, :fakefs do
     FileUtils.mkdir('/tmp')
   end
 
-  subject(:check) { described_class.new(logger: logger) }
+  subject(:check) { described_class.new(logger:) }
 
   describe "#call" do
     let(:app_schema_file) { File.join(app_schema_path, 'app.avsc') }
@@ -165,7 +165,7 @@ describe Avrolution::CompatibilityCheck, :fakefs do
       context "when the schema is compatible using the defined compatibility break" do
         before do
           allow(schema_registry).to receive(:compatible?)
-            .with('com.salsify.app', Avro::Schema, 'latest', with_compatibility: with_compatibility).and_return(true)
+            .with('com.salsify.app', Avro::Schema, 'latest', with_compatibility:).and_return(true)
         end
 
         it "returns success" do
@@ -178,7 +178,7 @@ describe Avrolution::CompatibilityCheck, :fakefs do
 
         before do
           allow(schema_registry).to receive(:compatible?)
-            .with('com.salsify.app', Avro::Schema, 'latest', with_compatibility: with_compatibility).and_return(false)
+            .with('com.salsify.app', Avro::Schema, 'latest', with_compatibility:).and_return(false)
         end
 
         it_behaves_like "an incompatible schema"

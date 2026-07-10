@@ -22,19 +22,19 @@ describe Avrolution::CompatibilityBreaksFile, :fakefs do
     context "validation" do
       it "raises an error when name is blank" do
         expect do
-          described_class.add(name: '', fingerprint: fingerprint)
+          described_class.add(name: '', fingerprint:)
         end.to raise_error(Avrolution::CompatibilityBreak::ValidationError, "Name can't be blank")
       end
 
       it "raises an error when fingerprint is blank" do
         expect do
-          described_class.add(name: name, fingerprint: '')
+          described_class.add(name:, fingerprint: '')
         end.to raise_error(Avrolution::CompatibilityBreak::ValidationError, "Fingerprint can't be blank")
       end
 
       it "raises an error when with compatibility is invalid" do
         expect do
-          described_class.add(name: name, fingerprint: fingerprint, with_compatibility: 'FOO')
+          described_class.add(name:, fingerprint:, with_compatibility: 'FOO')
         end.to raise_error(
           Avrolution::CompatibilityBreak::ValidationError,
           'With compatibility is not included in the list'
@@ -43,7 +43,7 @@ describe Avrolution::CompatibilityBreaksFile, :fakefs do
 
       it "raises an error when after compatibility is invalid" do
         expect do
-          described_class.add(name: name, fingerprint: fingerprint, after_compatibility: 'FOO')
+          described_class.add(name:, fingerprint:, after_compatibility: 'FOO')
         end.to raise_error(
           Avrolution::CompatibilityBreak::ValidationError,
           'After compatibility is not included in the list'
@@ -52,24 +52,24 @@ describe Avrolution::CompatibilityBreaksFile, :fakefs do
     end
 
     it "adds a line to the compatibility breaks file" do
-      described_class.add(name: name, fingerprint: fingerprint, with_compatibility: with_compatibility, logger: logger)
+      described_class.add(name:, fingerprint:, with_compatibility:, logger:)
       expect(File.read(described_class.path)).to eq("#{name} #{fingerprint} #{with_compatibility}\n")
     end
 
     context "when with_compatibility is not specified" do
       it "defaults with_compatibility to NONE" do
-        described_class.add(name: name, fingerprint: fingerprint, logger: logger)
+        described_class.add(name:, fingerprint:, logger:)
         expect(File.read(described_class.path)).to eq("#{name} #{fingerprint} NONE\n")
       end
     end
 
     context "when after compatibility is included" do
       it "adds a line to the compatibility breaks file" do
-        described_class.add(name: name,
-                            fingerprint: fingerprint,
-                            with_compatibility: with_compatibility,
-                            after_compatibility: after_compatibility,
-                            logger: logger)
+        described_class.add(name:,
+                            fingerprint:,
+                            with_compatibility:,
+                            after_compatibility:,
+                            logger:)
         expect(File.read(described_class.path)).to eq(
           "#{name} #{fingerprint} #{with_compatibility} #{after_compatibility}\n"
         )
@@ -88,7 +88,7 @@ describe Avrolution::CompatibilityBreaksFile, :fakefs do
 
       it "raises an error" do
         expect do
-          described_class.add(name: name, fingerprint: fingerprint, logger: logger)
+          described_class.add(name:, fingerprint:, logger:)
         end.to raise_error(described_class::DuplicateEntryError)
       end
     end
