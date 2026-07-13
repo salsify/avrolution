@@ -69,7 +69,7 @@ describe Avrolution::RegisterSchemas, :fakefs do
       it "registers the specified schema file" do
         register_schemas.call
         expect(schema_registry).to have_received(:register_without_lookup)
-          .with(fullname, json, with_compatibility: with_compatibility, after_compatibility: after_compatibility)
+          .with(fullname, json, with_compatibility:, after_compatibility:)
       end
     end
 
